@@ -1,0 +1,28 @@
+#!/bin/env bash
+# Set variables
+sec1=0; sec2=0
+min1=0; min2=0
+hr1=0; hr2=0
+# Create fix function to make sure it doesn't count seconds forever
+function fix {
+	time1=$1; time2=$2; other=$3; ishr=$4
+	if [[ $time2 -eq 10 ]]; then
+		export $time2=0
+		(( $time1++ ))
+	fi
+	if [[ $time1 -eq 6 ]] && [[ $ishr != yes ]]; then
+		export $time1=0
+		(( $other++ ))
+	fi
+}
+echo "00:00:00"
+# Start the stopwatch
+while true; do
+	sleep 1
+	(( sec2++ ))
+	fix sec1 sec2 min2
+	fix min1 min2 hr2
+	fix hr1 hr2 sec2 yes
+	echo $hr1$hr2:$min1$min2:$sec1$sec2
+done
+
