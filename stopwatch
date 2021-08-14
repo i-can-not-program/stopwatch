@@ -15,14 +15,12 @@ function fix {
 		(( $other++ ))
 	fi
 }
-echo "00:00:00"
 # Start the stopwatch
 while true; do
+	echo -ne "\r$hr1$hr2:$min1$min2:$sec1$sec2"
 	sleep 1
 	(( sec2++ ))
 	fix sec1 sec2 min2
 	fix min1 min2 hr2
 	fix hr1 hr2 sec2 yes
-	echo $hr1$hr2:$min1$min2:$sec1$sec2
 done
-
